@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="ComboInGridExample.Page"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:grid="clr-namespace:DevExpress.AgDataGrid;assembly=DevExpress.AgDataGrid.v8.2"
+             xmlns:local ="clr-namespace:ComboInGridExample">
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.Resources>
+            <local:Persons x:Name="DataSource"/>
+            <local:DataSourceNamesDictionary x:Name="DataSourceNamesDictionary"/>
+        </Grid.Resources>
+        <local:MyGrid x:Name="grid" DataSource="{StaticResource DataSource}">
+            <grid:AgDataGrid.Columns>
+                <grid:AgDataGridTextColumn FieldName="ID"/>
+                <grid:AgDataGridColumn FieldName="Name">
+                    <grid:AgDataGridColumn.CellDisplayTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding RowValue.Name}"/>
+                        </DataTemplate>
+                    </grid:AgDataGridColumn.CellDisplayTemplate>
+                    <grid:AgDataGridColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{StaticResource DataSourceNamesDictionary}" SelectedItem="{Binding RowValue.Name, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </grid:AgDataGridColumn.CellEditingTemplate>
+                </grid:AgDataGridColumn>
+            </grid:AgDataGrid.Columns>
+        </local:MyGrid>
+    </Grid>
+</UserControl>
